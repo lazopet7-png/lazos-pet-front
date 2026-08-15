@@ -9,14 +9,15 @@ class AuthService {
     try {
       const response = await api.post('/auth/login', credentials);
       const data = getApiData(response);
+      const user = data.user || data.admin;
       
       // Guardar token y datos del usuario
-      if (data.token) {
+      if (data.token && user) {
         localStorage.setItem('admin_token', data.token);
-        localStorage.setItem('admin_user', JSON.stringify(data.admin));
+        localStorage.setItem('admin_user', JSON.stringify(user));
       }
       
-      return data;
+      return { ...data, user };
     } catch (error) {
       throw new Error(handleApiError(error));
     }
@@ -36,7 +37,8 @@ class AuthService {
   async validateToken() {
     try {
       const response = await api.get('/auth/validate-token');
-      return getApiData(response);
+      const data = getApiData(response);
+      return data.user || data;
     } catch (error) {
       throw new Error(handleApiError(error));
     }

@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const data = await authService.login(credentials);
-      setUser(data.admin);
+      setUser(data.user);
       setIsAuthenticated(true);
       return data;
     } catch (error) {
