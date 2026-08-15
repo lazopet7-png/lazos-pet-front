@@ -50,6 +50,22 @@
   body {
     font-family: 'Lora', Georgia, serif;
   }
+
+  body.admin-layout {
+    background: #f3f8f5;
+    color: #1f2937;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+@layer components {
+  .pet-admin-card {
+    @apply rounded-xl border border-pet-100 bg-white shadow-sm;
+  }
+
+  .pet-admin-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-pet-500 focus:ring-offset-2;
+  }
 }
 
 /* Utilidades adicionales para memorial */

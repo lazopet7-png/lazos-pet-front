@@ -395,7 +395,7 @@ const MemorialForm = () => {
         {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Información básica */}
-          <div className="bg-white shadow rounded-lg">
+          <div className="pet-admin-card">
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
                 Información Básica
@@ -412,8 +412,8 @@ const MemorialForm = () => {
                     required
                     value={formData.nombre}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                    placeholder="Nombre completo de la persona fallecida"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Nombre de la mascota"
                   />
                 </div>
 
@@ -427,7 +427,7 @@ const MemorialForm = () => {
                     id="fechaNacimiento"
                     value={formData.fechaNacimiento?.split('T')[0] || ''}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
                   />
                 </div>
 
@@ -441,13 +441,13 @@ const MemorialForm = () => {
                     id="fechaFallecimiento"
                     value={formData.fechaFallecimiento?.split('T')[0] || ''}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
                   />
                 </div>
 
                 <div className="sm:col-span-2">
                   <label htmlFor="profesion" className="block text-sm font-medium text-gray-700">
-                    Profesión u ocupación
+                    Especie o raza
                   </label>
                   <input
                     type="text"
@@ -455,8 +455,8 @@ const MemorialForm = () => {
                     id="profesion"
                     value={formData.profesion}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                    placeholder="Ej: Profesor, Médico, Ama de casa..."
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Ej: Perro mestizo, gato siamés..."
                   />
                 </div>
 
@@ -470,8 +470,8 @@ const MemorialForm = () => {
                     id="frase"
                     value={formData.frase}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                    placeholder="Una frase que la representaba o que le gustaba decir"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Una frase o recuerdo que represente su vínculo"
                   />
                 </div>
               </div>
@@ -479,7 +479,7 @@ const MemorialForm = () => {
           </div>
 
           {/* Ubicación */}
-          <div className="bg-white shadow rounded-lg">
+          <div className="pet-admin-card">
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
                 Ubicación
@@ -495,7 +495,7 @@ const MemorialForm = () => {
                     id="ubicacion.ciudad"
                     value={formData.ubicacion.ciudad}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
                   />
                 </div>
 
@@ -509,13 +509,13 @@ const MemorialForm = () => {
                     id="ubicacion.pais"
                     value={formData.ubicacion.pais}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
                   />
                 </div>
 
                 <div className="sm:col-span-2">
                   <label htmlFor="ubicacion.cementerio" className="block text-sm font-medium text-gray-700">
-                    Cementerio
+                    Lugar de descanso
                   </label>
                   <input
                     type="text"
@@ -523,8 +523,8 @@ const MemorialForm = () => {
                     id="ubicacion.cementerio"
                     value={formData.ubicacion.cementerio}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                    placeholder="Nombre del cementerio donde descansa"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Cementerio, jardín o lugar especial (opcional)"
                   />
                 </div>
               </div>
@@ -532,15 +532,15 @@ const MemorialForm = () => {
           </div>
 
           {/* Familia */}
-          <div className="bg-white shadow rounded-lg">
+          <div className="pet-admin-card">
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
-                Información Familiar
+                Familia de la mascota
               </h3>
               <div className="space-y-4">
                 <div>
                   <label htmlFor="familia.conyuge" className="block text-sm font-medium text-gray-700">
-                    Cónyuge
+                    Compañero o compañera
                   </label>
                   <input
                     type="text"
@@ -548,14 +548,14 @@ const MemorialForm = () => {
                     id="familia.conyuge"
                     value={formData.familia.conyuge}
                     onChange={handleChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                    placeholder="Nombre del esposo/esposa"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Nombre de otra mascota cercana (opcional)"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Hijos
+                    Crías
                   </label>
                   {formData.familia.hijos.map((hijo, index) => (
                     <div key={index} className="flex items-center space-x-2 mb-2">
@@ -563,8 +563,8 @@ const MemorialForm = () => {
                         type="text"
                         value={hijo}
                         onChange={(e) => handleArrayChange('hijos', index, e.target.value)}
-                        className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                        placeholder="Nombre del hijo/hija"
+                        className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                        placeholder="Nombre de la cría"
                       />
                       <button
                         type="button"
@@ -580,9 +580,9 @@ const MemorialForm = () => {
                   <button
                     type="button"
                     onClick={() => addArrayField('hijos')}
-                    className="text-sm text-red-600 hover:text-red-800"
+                    className="text-sm text-pet-700 hover:text-pet-900"
                   >
-                    + Agregar hijo
+                    + Agregar cría
                   </button>
                 </div>
               </div>
@@ -590,7 +590,7 @@ const MemorialForm = () => {
           </div>
 
           {/* Biografía */}
-          <div className="bg-white shadow rounded-lg">
+          <div className="pet-admin-card">
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
                 Biografía
@@ -605,8 +605,8 @@ const MemorialForm = () => {
                   rows={8}
                   value={formData.biografia}
                   onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                  placeholder="Escribe la historia de vida de la persona. Incluye aspectos importantes como su personalidad, logros, momentos especiales, lo que más le gustaba hacer, su legado, etc."
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                  placeholder="Cuenta su historia: personalidad, juegos favoritos, momentos especiales, costumbres y la huella que dejó en la familia."
                 />
                 <p className="mt-2 text-sm text-gray-500">
                   Esta biografía aparecerá en el memorial público. Sé respetuoso y cariñoso.
@@ -627,7 +627,7 @@ const MemorialForm = () => {
             <button
               type="submit"
               disabled={submitLoading}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pet-700 hover:bg-pet-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pet-500 disabled:opacity-50"
             >
               {submitLoading ? (
                 <>

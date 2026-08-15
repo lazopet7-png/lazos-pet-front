@@ -114,7 +114,7 @@ const ClientDetails = () => {
             <div className="mt-6">
               <button
                 onClick={() => navigate('/admin/clients')}
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pet-700 hover:bg-pet-800"
               >
                 Volver a clientes
               </button>
@@ -172,9 +172,9 @@ const ClientDetails = () => {
               {memorials.length === 0 && (
                 <button
                   onClick={() => navigate(`/admin/memorials/new/${clientId}`)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pet-700 hover:bg-pet-800"
                 >
-                  🌹 Crear Memorial
+                  🐾 Crear Memorial
                 </button>
               )}
             </div>
@@ -251,7 +251,7 @@ const ClientDetails = () => {
                     <div className="mt-4">
                       <button
                         onClick={() => navigate(`/admin/memorials/new/${clientId}`)}
-                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-pet-700 hover:bg-pet-800"
                       >
                         Crear Memorial
                       </button>

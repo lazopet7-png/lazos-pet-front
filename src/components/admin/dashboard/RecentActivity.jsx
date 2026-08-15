@@ -1,15 +1,9 @@
 // ====================================
 // src/components/admin/dashboard/RecentActivity.jsx - Actividad reciente
 // ====================================
-import React from 'react';
+import { LuPawPrint, LuPlus, LuQrCode, LuUserRound } from 'react-icons/lu';
 
 const RecentActivity = ({ title, items = [], type, onAction }) => {
-  // 🚨 DEBUG: Ver datos que llegan
-  console.log(`=== DEBUG RecentActivity (${type}) ===`);
-  console.log('Title:', title);
-  console.log('Items:', items);
-  console.log('Items length:', items?.length);
-  console.log('=====================================');
   const formatDate = (dateString) => {
     if (!dateString) return 'Sin fecha';
     try {
@@ -41,10 +35,8 @@ const RecentActivity = ({ title, items = [], type, onAction }) => {
         <li key={item.id || item._id || index} className="py-4">
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0">
-              <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                <svg className="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+              <div className="h-9 w-9 rounded-full bg-pet-100 flex items-center justify-center">
+                <LuUserRound className="h-5 w-5 text-pet-700" aria-hidden="true" />
               </div>
             </div>
             <div className="flex-1 min-w-0">
@@ -61,17 +53,9 @@ const RecentActivity = ({ title, items = [], type, onAction }) => {
             <div className="flex-shrink-0">
               <button
                 onClick={() => {
-                  // 🚨 DEBUG: Ver datos del item antes de navegar
-                  console.log('=== DEBUG RecentActivity onClick ===');
-                  console.log('Item completo:', item);
-                  console.log('Item._id:', item._id);
-                  console.log('Item.id:', item.id);
-                  console.log('Acción:', 'view-client');
-                  console.log('=======================================');
-                  // 🔧 FIX: Usar item.id en lugar de item._id
                   onAction('view-client', item.id || item._id);
                 }}
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 hover:bg-blue-200"
+                className="inline-flex items-center rounded-full bg-pet-100 px-2.5 py-1 text-xs font-medium text-pet-800 hover:bg-pet-200"
               >
                 Ver
               </button>
@@ -86,10 +70,8 @@ const RecentActivity = ({ title, items = [], type, onAction }) => {
         <li key={item.id || item._id || index} className="py-4">
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0">
-              <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center">
-                <svg className="h-5 w-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+              <div className="h-9 w-9 rounded-full bg-clay-100 flex items-center justify-center">
+                <LuPawPrint className="h-5 w-5 text-clay-700" aria-hidden="true" />
               </div>
             </div>
             <div className="flex-1 min-w-0">
@@ -105,23 +87,17 @@ const RecentActivity = ({ title, items = [], type, onAction }) => {
             </div>
             <div className="flex-shrink-0 flex space-x-2">
               <button
-                onClick={() => {
-                  console.log('=== DEBUG Memorial onClick ===');
-                  console.log('Memorial item:', item);
-                  console.log('Memorial item.id:', item.id);
-                  console.log('Memorial item._id:', item._id);
-                  console.log('===============================');
-                  onAction('view-memorial', item.id || item._id);
-                }}
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 hover:bg-red-200"
+                onClick={() => onAction('view-memorial', item.id || item._id)}
+                className="inline-flex items-center rounded-full bg-clay-100 px-2.5 py-1 text-xs font-medium text-clay-700 hover:bg-clay-200"
               >
                 Ver
               </button>
               {item.qr && (
                 <button
                   onClick={() => onAction('print-qr', item.id || item._id)}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 hover:bg-green-200"
+                  className="inline-flex items-center rounded-full bg-pet-700 px-2.5 py-1 text-xs font-medium text-white hover:bg-pet-800"
                 >
+                  <LuQrCode className="mr-1 h-3.5 w-3.5" aria-hidden="true" />
                   QR
                 </button>
               )}
@@ -135,15 +111,15 @@ const RecentActivity = ({ title, items = [], type, onAction }) => {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg">
+    <div className="pet-admin-card">
       <div className="px-4 py-5 sm:p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+          <h3 className="text-lg leading-6 font-semibold text-pet-900">
             {title}
           </h3>
           <button
             onClick={() => onAction(type === 'clients' ? 'view-all-clients' : 'view-all-memorials')}
-            className="text-sm font-medium text-red-600 hover:text-red-500"
+            className="text-sm font-medium text-pet-700 hover:text-pet-900"
           >
             Ver todos
           </button>
@@ -157,15 +133,11 @@ const RecentActivity = ({ title, items = [], type, onAction }) => {
           </div>
         ) : (
           <div className="text-center py-6">
-            <div className="mx-auto h-12 w-12 text-gray-400">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-pet-50 text-pet-500">
               {type === 'clients' ? (
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                </svg>
+                <LuUserRound className="h-6 w-6" aria-hidden="true" />
               ) : (
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+                <LuPawPrint className="h-6 w-6" aria-hidden="true" />
               )}
             </div>
             <h3 className="mt-2 text-sm font-medium text-gray-900">
@@ -180,11 +152,9 @@ const RecentActivity = ({ title, items = [], type, onAction }) => {
             <div className="mt-6">
               <button
                 onClick={() => onAction(type === 'clients' ? 'new-client' : 'new-memorial')}
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="pet-admin-focus inline-flex items-center rounded-lg border border-transparent bg-pet-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-pet-800"
               >
-                <svg className="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
+                <LuPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                 {type === 'clients' ? 'Agregar Cliente' : 'Crear Memorial'}
               </button>
             </div>

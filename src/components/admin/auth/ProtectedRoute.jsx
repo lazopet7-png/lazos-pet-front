@@ -1,7 +1,6 @@
 // ====================================
 // src/components/admin/auth/ProtectedRoute.jsx - Protección de rutas administrativas
 // ====================================
-import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 
@@ -12,10 +11,10 @@ const ProtectedRoute = ({ children }) => {
   // Mostrar loader mientras verifica autenticación
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-pet-50 font-admin">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-red-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Verificando autenticación...</p>
+          <div className="mx-auto h-14 w-14 animate-spin rounded-full border-4 border-pet-100 border-t-pet-600"></div>
+          <p className="mt-4 text-sm font-medium text-pet-700">Verificando autenticación...</p>
         </div>
       </div>
     );

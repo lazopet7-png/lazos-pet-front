@@ -170,7 +170,7 @@ const MemorialList = () => {
             <button
               type="button"
               onClick={() => navigate('/admin/clients')}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pet-700 hover:bg-pet-800"
             >
               <svg className="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -221,7 +221,7 @@ const MemorialList = () => {
               <div className="mt-6">
                 <button
                   onClick={() => navigate('/admin/clients')}
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pet-700 hover:bg-pet-800"
                 >
                   <svg className="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -326,7 +326,7 @@ const MemorialList = () => {
                           </button>
                           <button
                             onClick={() => handleDeleteMemorial(memorial._id, memorial.nombre, loadMemorials)}
-                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-sm transition-colors duration-200"
+                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-pet-700 hover:bg-pet-800 rounded-lg shadow-sm transition-colors duration-200"
                             title="Eliminar memorial"
                           >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

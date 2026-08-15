@@ -1,8 +1,9 @@
 // ====================================
 // src/App.jsx - Aplicación principal con routing integrado
 // ====================================
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { LuPawPrint } from 'react-icons/lu';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/admin/auth/ProtectedRoute';
 import AdminLayout from './components/admin/layout/AdminLayout';
@@ -22,16 +23,6 @@ import PrintQRPage from './pages/admin/PrintQR';
 import MemorialComentarios from './pages/admin/MemorialComentarios';
 import QRManagement from './pages/admin/QRManagement';
 import MediaManagement from './pages/admin/MediaManagement';
-
-// Componentes del memorial original (para mantener compatibilidad)
-import Banner from './components/Banner';
-import Footer from './components/Footer';
-import NavBar from './components/NavBar';
-import ProfileHeader from './components/ProfileHeader';
-import TabsNavigation from './components/TabsNavigation';
-import Historia from './components/Historia';
-import Contenido from './components/Contenido';
-import Comentarios from './components/Comentarios';
 
 import './App.css';
 
@@ -64,14 +55,12 @@ const BodyClassManager = () => {
 // Página de inicio temporal (puedes personalizarla)
 const HomePage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-pet-50 font-admin">
       <div className="text-center">
-        <div className="mx-auto h-20 w-20 flex items-center justify-center rounded-full bg-red-100 mb-6">
-          <svg className="h-12 w-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-pet-900 text-white shadow-sm">
+          <LuPawPrint className="h-12 w-12" aria-hidden="true" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <h1 className="mb-4 text-3xl font-bold tracking-tight text-pet-900">
           Lazos de Vida Pets
         </h1>
         <p className="text-lg text-gray-600 mb-8">
@@ -80,7 +69,7 @@ const HomePage = () => {
         <div className="space-x-4">
           <a
             href="/admin"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+            className="inline-flex items-center rounded-lg border border-transparent bg-pet-700 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-pet-800"
           >
             Panel Administrativo
           </a>
@@ -99,7 +88,7 @@ const NotFound = () => {
         <p className="text-xl text-gray-600 mb-6">Página no encontrada</p>
         <a
           href="/"
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+          className="inline-flex items-center rounded-lg border border-transparent bg-pet-700 px-4 py-2 text-sm font-medium text-white hover:bg-pet-800"
         >
           Volver al inicio
         </a>

@@ -1,8 +1,9 @@
 // ====================================
 // src/components/admin/dashboard/Dashboard.jsx - Dashboard principal del admin
 // ====================================
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LuPawPrint, LuPlus, LuQrCode, LuUserPlus } from 'react-icons/lu';
 import { adminService } from '../../../services';
 import StatsCards from './StatsCards';
 import RecentActivity from './RecentActivity';
@@ -40,7 +41,7 @@ const Dashboard = () => {
           totalMemorials: data.estadisticas?.memoriales?.total || 0,
           totalQRs: data.estadisticas?.qrs?.total ?? data.estadisticas?.memoriales?.total ?? 0,
           clientsChange: `+${data.estadisticas?.clientes?.nuevosEsteMes || 0}`,
-          memorialesChange: `+${data.estadisticas?.memoriales?.nuevosEsteMes || 0}`,
+          memorialsChange: `+${data.estadisticas?.memoriales?.nuevosEsteMes || 0}`,
           qrChange: `+${data.estadisticas?.qrs?.nuevosEsteMes ?? data.estadisticas?.memoriales?.nuevosEsteMes ?? 0}`,
           clientsChangeType: (data.estadisticas?.clientes?.nuevosEsteMes || 0) > 0 ? 'positive' : 'neutral',
           memorialsChangeType: (data.estadisticas?.memoriales?.nuevosEsteMes || 0) > 0 ? 'positive' : 'neutral',
@@ -97,12 +98,12 @@ const Dashboard = () => {
       <div>
         <div className="max-w-7xl mx-auto">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-300 rounded w-1/4 mb-6"></div>
+            <div className="h-8 bg-pet-100 rounded w-1/4 mb-6"></div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="bg-white p-6 rounded-lg shadow">
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-8 bg-gray-300 rounded"></div>
+                <div key={i} className="pet-admin-card p-6">
+                  <div className="h-4 bg-pet-100 rounded mb-2"></div>
+                  <div className="h-8 bg-pet-100 rounded"></div>
                 </div>
               ))}
             </div>
@@ -114,36 +115,28 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="max-w-7xl mx-auto">
-        {/* 🔧 FIX: Asegurar que no haya elementos con altura excesiva */}
-        <style jsx>{`
-          .dashboard-container * {
-            max-height: none;
-          }
-          .dashboard-container .overflow-hidden {
-            max-height: fit-content;
-          }
-        `}</style>
-        <div className="dashboard-container">
+      <div className="max-w-7xl mx-auto dashboard-container">
         {/* Header */}
         <div className="md:flex md:items-center md:justify-between mb-6">
           <div className="flex-1 min-w-0">
-            <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-              Dashboard Admin
+            <div className="mb-2 inline-flex items-center rounded-full bg-pet-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-pet-700">
+              <LuPawPrint className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
+              Gestión de mascotas
+            </div>
+            <h2 className="text-2xl font-bold leading-7 tracking-tight text-pet-900 sm:text-3xl sm:truncate">
+              Panel de Lazos de Vida Pets
             </h2>
-            <p className="mt-1 text-sm text-gray-500">
-              Resumen general del sistema de memoriales digitales
+            <p className="mt-1 text-sm text-gray-600">
+              Clientes, memoriales y códigos QR en un solo lugar.
             </p>
           </div>
           <div className="mt-4 flex md:mt-0 md:ml-4">
             <button
               type="button"
               onClick={() => handleQuickAction('new-client')}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              className="pet-admin-focus inline-flex items-center rounded-lg border border-transparent bg-pet-700 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-pet-800"
             >
-              <svg className="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
+              <LuPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
               Nuevo Cliente
             </button>
           </div>
@@ -166,10 +159,7 @@ const Dashboard = () => {
         )}
 
         {/* Tarjetas de estadísticas */}
-        <StatsCards 
-          stats={dashboardData.stats} 
-          onQuickAction={handleQuickAction} 
-        />
+        <StatsCards stats={dashboardData.stats} />
 
         {/* Actividad reciente */}
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -188,50 +178,44 @@ const Dashboard = () => {
         </div>
 
         {/* Acciones rápidas */}
-        <div className="mt-8 bg-white overflow-hidden shadow rounded-lg">
+        <div className="pet-admin-card mt-8 overflow-hidden">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
-              Acciones Rápidas
+            <h3 className="mb-1 text-lg font-semibold leading-6 text-pet-900">
+              Acciones rápidas
             </h3>
+            <p className="mb-4 text-sm text-gray-500">Atajos para las tareas más frecuentes del equipo.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <button
                 onClick={() => handleQuickAction('new-client')}
-                className="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="pet-admin-focus group relative block w-full rounded-xl border border-pet-200 bg-pet-50/60 p-6 text-center transition-colors hover:border-pet-400 hover:bg-pet-50"
               >
-                <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                </svg>
-                <span className="mt-2 block text-sm font-medium text-gray-900">
+                <LuUserPlus className="mx-auto h-8 w-8 text-pet-600 transition-colors group-hover:text-pet-800" aria-hidden="true" />
+                <span className="mt-3 block text-sm font-medium text-pet-900">
                   Registrar Cliente
                 </span>
               </button>
 
               <button
                 onClick={() => navigate('/admin/clients')}
-                className="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="pet-admin-focus group relative block w-full rounded-xl border border-clay-200 bg-clay-50/60 p-6 text-center transition-colors hover:border-clay-400 hover:bg-clay-50"
               >
-                <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-                <span className="mt-2 block text-sm font-medium text-gray-900">
+                <LuPawPrint className="mx-auto h-8 w-8 text-clay-600 transition-colors group-hover:text-clay-700" aria-hidden="true" />
+                <span className="mt-3 block text-sm font-medium text-pet-900">
                   Crear Memorial
                 </span>
               </button>
 
               <button
                 onClick={() => navigate('/admin/qr-codes')}
-                className="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="pet-admin-focus group relative block w-full rounded-xl border border-pet-200 bg-pet-50/60 p-6 text-center transition-colors hover:border-pet-400 hover:bg-pet-50"
               >
-                <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                </svg>
-                <span className="mt-2 block text-sm font-medium text-gray-900">
+                <LuQrCode className="mx-auto h-8 w-8 text-pet-600 transition-colors group-hover:text-pet-800" aria-hidden="true" />
+                <span className="mt-3 block text-sm font-medium text-pet-900">
                   Gestionar QR
                 </span>
               </button>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

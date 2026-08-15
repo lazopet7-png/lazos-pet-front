@@ -1,7 +1,6 @@
 // ====================================
 // src/components/admin/layout/Header.jsx - Header del panel administrativo
 // ====================================
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 // Mapeo de rutas a títulos de página
@@ -51,12 +50,12 @@ const Header = ({ onMenuClick }) => {
   const pageTitle = getPageTitle(location.pathname);
 
   return (
-    <div className="bg-white shadow-sm border-b border-gray-200 flex-shrink-0">
+    <div className="bg-white/95 border-b border-pet-100 flex-shrink-0">
       <div className="flex items-center justify-between h-14 px-4 sm:px-6 lg:px-8">
         {/* Botón de menú móvil */}
         <button
           type="button"
-          className="p-2 rounded-md text-gray-500 lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
+          className="p-2 rounded-lg text-pet-700 lg:hidden hover:bg-pet-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pet-500"
           onClick={onMenuClick}
         >
           <span className="sr-only">Abrir sidebar</span>
@@ -67,9 +66,12 @@ const Header = ({ onMenuClick }) => {
 
         {/* Título dinámico de la página */}
         <div className="flex-1 flex items-center lg:ml-0 ml-3">
-          <h1 className="text-lg font-medium text-gray-900">
+          <h1 className="text-lg font-semibold tracking-tight text-pet-900">
             {pageTitle}
           </h1>
+          <span className="ml-3 hidden sm:inline-flex items-center rounded-full bg-clay-50 px-2.5 py-1 text-xs font-medium text-clay-700">
+            Lazos de Vida Pets
+          </span>
         </div>
       </div>
     </div>

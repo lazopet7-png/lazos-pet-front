@@ -6,7 +6,32 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        pet: {
+          50: '#f3f8f5',
+          100: '#e1eee7',
+          200: '#c5ddd1',
+          300: '#9cc4b1',
+          400: '#70a68e',
+          500: '#508a72',
+          600: '#3d705d',
+          700: '#315b4c',
+          800: '#294a3f',
+          900: '#233e36',
+        },
+        clay: {
+          50: '#fcf6f2',
+          100: '#f8e9df',
+          200: '#efd0bc',
+          300: '#e3ad8c',
+          400: '#d4875f',
+          500: '#c66d47',
+          600: '#ad5334',
+          700: '#8f402b',
+        },
+      },
       fontFamily: {
+        'admin': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         'memorial': ['Lora', 'Georgia', 'serif'],
         'elegant': ['Lora', 'Georgia', 'serif'],
         'serif': ['Lora', 'Georgia', 'serif'],
