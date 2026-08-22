@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-const Contenido = ({ memorialData }) => {
-  const [tipoContenido, setTipoContenido] = useState("fotos"); // Estado para tipo de contenido
+const Contenido = ({ memorialData, contentType }) => {
+  const [tipoContenido, setTipoContenido] = useState(contentType || "fotos");
   
   // Debug: Ver qué datos estamos recibiendo
   console.log('🖼️ Contenido - memorialData completo:', memorialData);
@@ -101,6 +101,13 @@ const Contenido = ({ memorialData }) => {
     setFade(true);
   }, [paginaActual, tipoContenido]);
 
+  useEffect(() => {
+    if (contentType && contentType !== tipoContenido) {
+      setTipoContenido(contentType);
+      setPaginaActual(1);
+    }
+  }, [contentType, tipoContenido]);
+
   return (
     <div className="animate-fadeIn">
       {/* Modal para imagen ampliada */}
@@ -184,13 +191,13 @@ const Contenido = ({ memorialData }) => {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100">
-        <h2 className="font-memorial text-memorial-subtitle sm:text-memorial-title text-gray-800 mb-4 sm:mb-6 text-center pt-6 font-semibold tracking-wide">
-          Galería de Recuerdos
+      <div className="pet-gallery-panel">
+        <h2>
+          {tipoContenido === 'fotos' ? 'Fotos para recordar' : 'Videos para volver a sentir'}
         </h2>
 
         {/* Navegación horizontal - SOLO fotos y videos */}
-        <div className="flex px-3 sm:px-6 overflow-x-auto border-b mb-4 sm:mb-6">
+        {!contentType && <div className="flex px-3 sm:px-6 overflow-x-auto border-b mb-4 sm:mb-6">
           <button 
             onClick={() => cambiarTipoContenido("fotos")}
             className={`font-memorial px-3 sm:px-4 py-2 font-medium focus:outline-none mr-2 sm:mr-4 border-b-2 transition-colors duration-200 whitespace-nowrap text-sm sm:text-base ${
@@ -211,7 +218,7 @@ const Contenido = ({ memorialData }) => {
           >
             🎥 Videos
           </button>
-        </div>
+        </div>}
 
         {/* Contenido dinámico según el tipo seleccionado */}
         <div className="px-3 sm:px-6 pb-6 sm:pb-8">
