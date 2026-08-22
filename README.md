@@ -76,10 +76,12 @@ Todas las rutas administrativas, salvo el login, están protegidas con JWT.
 1. El administrador inicia sesión.
 2. Registra a la persona que contrata el servicio.
 3. Crea el memorial de la mascota.
-4. Completa la historia, fechas, vínculos y lugar de descanso opcional.
+4. Completa la historia, fechas, especie, raza, personalidad, favoritos y lugar de descanso opcional.
 5. Carga fotografías, videos, música y fondos.
 6. El sistema genera un QR con la URL pública del memorial.
 7. La familia escanea el QR y abre el memorial sin iniciar sesión.
+
+El memorial público usa una composición móvil con identidad visual Pets. La música sigue disponible, pero su acceso y reproductor solo aparecen cuando el memorial tiene al menos una pista cargada.
 
 ## Arquitectura
 

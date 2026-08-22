@@ -34,18 +34,20 @@ const BodyClassManager = () => {
     const body = document.body;
     
     // Limpiar clases anteriores
-    body.classList.remove('admin-layout', 'default-layout');
+    body.classList.remove('admin-layout', 'default-layout', 'memorial-layout');
     
     // Aplicar clase según la ruta
     if (location.pathname.startsWith('/admin')) {
       body.classList.add('admin-layout');
+    } else if (location.pathname.startsWith('/memorial/')) {
+      body.classList.add('memorial-layout');
     } else {
       body.classList.add('default-layout');
     }
     
     // Cleanup al desmontar
     return () => {
-      body.classList.remove('admin-layout', 'default-layout');
+      body.classList.remove('admin-layout', 'default-layout', 'memorial-layout');
     };
   }, [location.pathname]);
   

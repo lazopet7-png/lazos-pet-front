@@ -13,3 +13,11 @@
   padding: 2rem;
   text-align: center;
 }
+
+/* El memorial controla su propio ancho en móvil y escritorio. */
+.memorial-layout #root {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}

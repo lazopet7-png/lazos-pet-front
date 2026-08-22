@@ -25,6 +25,7 @@ import {
 // Importar servicios
 import memorialService from '../services/memorialService';
 import mediaService from '../services/mediaService';
+import '../styles/pet-memorial.css';
 
 const Memorial = () => {
   const { qrCode } = useParams();
@@ -258,8 +259,10 @@ const Memorial = () => {
     switch (activeTab) {
       case "historia":
         return <Historia memorialData={memorialData.memorial} />;
-      case "contenido":
-        return <Contenido memorialData={memorialData.memorial} />;
+      case "fotos":
+        return <Contenido key="fotos" memorialData={memorialData.memorial} contentType="fotos" />;
+      case "videos":
+        return <Contenido key="videos" memorialData={memorialData.memorial} contentType="videos" />;
       case "comentarios":
         return (
           <Comentarios 
@@ -311,14 +314,6 @@ const Memorial = () => {
             Volver al inicio
           </button>
           
-          {/* Información de debug en desarrollo */}
-          {process.env.NODE_ENV === 'development' && (
-            <div className="mt-6 p-4 bg-gray-100 rounded-lg text-left">
-              <h4 className="font-medium text-gray-900 mb-2">Debug Info:</h4>
-              <p className="text-sm text-gray-600">QR Code: {qrCode}</p>
-              <p className="text-sm text-gray-600">Error: {error}</p>
-            </div>
-          )}
         </div>
       </div>
     );
@@ -328,39 +323,33 @@ const Memorial = () => {
   const theme = memorial.dashboard?.tema || 'clasico';
 
   return (
-    <div className={`min-h-screen flex flex-col memorial theme-${theme}`}>
-      {/* Header con fondos dinámicos */}
-      <ProfileHeader 
-        memorialData={memorial} 
-        onMusicButtonClick={handleMusicButtonClick}
-        musicTracks={musicTracks}
-      />
-      
-      {/* Navegación de pestañas */}
-      <TabsNavigation 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        secciones={memorial.dashboard?.secciones || ['historia', 'contenido', 'comentarios']}
-      />
-      
-      {/* Contenido dinámico según la pestaña seleccionada */}
-      <div className="flex-grow container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8">
-        {renderTabContent()}
-      </div>
+    <div className={`pet-memorial-page memorial theme-${theme}`}>
+      <main className="pet-memorial-shell">
+        <ProfileHeader
+          memorialData={memorial}
+          onMusicButtonClick={handleMusicButtonClick}
+          musicTracks={musicTracks}
+        />
+
+        <TabsNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+
+        <div className="pet-memorial-content">
+          {renderTabContent()}
+        </div>
+      </main>
       
       {/* Redes sociales del memorial - estilo navbar */}
-      <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-t border-gray-200">
-        <div className="container mx-auto px-4 py-6">
+      <div className="pet-socials">
+        <div>
           <div className="text-center">
-            <h3 className="font-memorial text-lg font-medium text-gray-800 mb-4">
-              Síguenos en redes sociales
+            <h3>
+              También estamos cerca de ti
             </h3>
-            <div className="flex justify-center space-x-4">
+            <div className="pet-social-links">
               <a 
                 href="https://www.facebook.com/qr_lazosdevida"
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-700 hover:text-blue-600 transition-colors transform hover:scale-110 duration-200" 
                 aria-label="Facebook"
               >
                 <FaFacebookSquare size={20} />
@@ -369,7 +358,6 @@ const Memorial = () => {
                 href="https://www.instagram.com/qr_lazosdevida"
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-700 hover:text-pink-600 transition-colors transform hover:scale-110 duration-200" 
                 aria-label="Instagram"
               >
                 <FaInstagramSquare size={20} />
@@ -378,7 +366,6 @@ const Memorial = () => {
                 href="https://www.tiktok.com/@qr_lazosdevida"
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-700 hover:text-black transition-colors transform hover:scale-110 duration-200" 
                 aria-label="TikTok"
               >
                 <FaTiktok size={20} />
@@ -387,7 +374,6 @@ const Memorial = () => {
                 href="https://wa.me/56933783343"
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-green-500 hover:text-green-600 transition-colors transform hover:scale-110 duration-200" 
                 aria-label="WhatsApp"
               >
                 <FaWhatsapp size={24} />
@@ -400,7 +386,7 @@ const Memorial = () => {
       <Footer />
 
       {/* Reproductor de música */}
-      {showMusicPlayer && (
+      {showMusicPlayer && musicTracks.length > 0 && (
         <MusicPlayer 
           songs={musicTracks}
           onClose={handleCloseMusicPlayer}
@@ -410,7 +396,7 @@ const Memorial = () => {
       )}
 
       {/* Mini reproductor */}
-      {currentSong && (
+      {currentSong && musicTracks.length > 0 && (
         <MiniPlayer 
           song={currentSong}
           onStop={handleStopMusic}
@@ -419,15 +405,6 @@ const Memorial = () => {
         />
       )}
 
-      {/* Información de estado en desarrollo */}
-      {process.env.NODE_ENV === 'development' && false && ( // Deshabilitado temporalmente
-        <div className="fixed bottom-4 left-4 bg-black/80 text-white text-xs p-2 rounded-lg max-w-xs">
-          <p><strong>Memorial ID:</strong> {memorial._id}</p>
-          <p><strong>QR Code:</strong> {qrCode}</p>
-          <p><strong>Tema:</strong> {theme}</p>
-          <p><strong>Fondos:</strong> Dinámicos</p>
-        </div>
-      )}
     </div>
   );
 };
