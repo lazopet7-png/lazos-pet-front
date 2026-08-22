@@ -1,7 +1,7 @@
 // ====================================
 // src/components/admin/memorials/MemorialForm.jsx - Formulario de memorial
 // ====================================
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { memorialService, clientService, qrService } from '../../../services';
 
@@ -27,6 +27,18 @@ const MemorialForm = () => {
     profesion: '',
     frase: '',
     biografia: '',
+    mascota: {
+      especie: '',
+      raza: '',
+      sexo: '',
+      personalidad: '',
+      favoritos: {
+        actividad: '',
+        juguete: '',
+        comida: '',
+        lugar: ''
+      }
+    },
     ubicacion: {
       ciudad: '',
       pais: '',
@@ -44,25 +56,7 @@ const MemorialForm = () => {
   const [error, setError] = useState('');
   const [qrGenerated, setQrGenerated] = useState(false);
 
-  useEffect(() => {
-    console.log('=== useEffect ejecutándose ===');
-    console.log('clientId en useEffect:', clientId);
-    console.log('memorialId en useEffect:', memorialId);
-    
-    if (clientId && clientId !== 'undefined') {
-      console.log('Cargando cliente con ID:', clientId);
-      loadClient();
-    } else {
-      console.warn('clientId es undefined o inválido:', clientId);
-    }
-    
-    if (isEdit && memorialId && memorialId !== 'undefined') {
-      console.log('Cargando memorial para edición con ID:', memorialId);
-      loadMemorial();
-    }
-  }, [clientId, memorialId, isEdit]);
-
-  const loadClient = async () => {
+  const loadClient = useCallback(async () => {
     if (!clientId || clientId === 'undefined') {
       console.error('No se puede cargar cliente: clientId es undefined');
       setError('ID de cliente no válido. Por favor regresa a la lista de clientes.');
@@ -97,9 +91,9 @@ const MemorialForm = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [clientId]);
 
-  const loadMemorial = async () => {
+  const loadMemorial = useCallback(async () => {
     try {
       setLoading(true);
       console.log('Cargando memorial con ID:', memorialId);
@@ -118,6 +112,18 @@ const MemorialForm = () => {
         profesion: memorial.profesion || '',
         frase: memorial.frase || '',
         biografia: memorial.biografia || '',
+        mascota: {
+          especie: memorial.mascota?.especie || memorial.profesion || '',
+          raza: memorial.mascota?.raza || '',
+          sexo: memorial.mascota?.sexo || '',
+          personalidad: memorial.mascota?.personalidad || '',
+          favoritos: {
+            actividad: memorial.mascota?.favoritos?.actividad || '',
+            juguete: memorial.mascota?.favoritos?.juguete || '',
+            comida: memorial.mascota?.favoritos?.comida || '',
+            lugar: memorial.mascota?.favoritos?.lugar || ''
+          }
+        },
         ubicacion: {
           ciudad: memorial.ubicacion?.ciudad || '',
           pais: memorial.ubicacion?.pais || '',
@@ -151,54 +157,43 @@ const MemorialForm = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [memorialId]);
+
+  useEffect(() => {
+    console.log('=== useEffect ejecutándose ===');
+    console.log('clientId en useEffect:', clientId);
+    console.log('memorialId en useEffect:', memorialId);
+
+    if (clientId && clientId !== 'undefined') {
+      console.log('Cargando cliente con ID:', clientId);
+      loadClient();
+    } else {
+      console.warn('clientId es undefined o inválido:', clientId);
+    }
+
+    if (isEdit && memorialId && memorialId !== 'undefined') {
+      console.log('Cargando memorial para edición con ID:', memorialId);
+      loadMemorial();
+    }
+  }, [clientId, isEdit, loadClient, loadMemorial, memorialId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormData(prev => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent],
-          [child]: value
-        }
-      }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
-  };
+    const path = name.split('.');
 
-  const handleArrayChange = (field, index, value) => {
-    setFormData(prev => {
-      const newArray = [...prev.familia[field]];
-      if (value === '') {
-        newArray.splice(index, 1);
-      } else {
-        newArray[index] = value;
+    const updateNestedValue = (source, keys) => {
+      const [currentKey, ...remainingKeys] = keys;
+      if (remainingKeys.length === 0) {
+        return { ...source, [currentKey]: value };
       }
+
       return {
-        ...prev,
-        familia: {
-          ...prev.familia,
-          [field]: newArray
-        }
+        ...source,
+        [currentKey]: updateNestedValue(source?.[currentKey] || {}, remainingKeys)
       };
-    });
-  };
+    };
 
-  const addArrayField = (field) => {
-    setFormData(prev => ({
-      ...prev,
-      familia: {
-        ...prev.familia,
-        [field]: [...prev.familia[field], '']
-      }
-    }));
+    setFormData(prev => updateNestedValue(prev, path));
   };
 
   const handleSubmit = async (e) => {
@@ -445,18 +440,67 @@ const MemorialForm = () => {
                   />
                 </div>
 
-                <div className="sm:col-span-2">
-                  <label htmlFor="profesion" className="block text-sm font-medium text-gray-700">
-                    Especie o raza
+                <div>
+                  <label htmlFor="mascota.especie" className="block text-sm font-medium text-gray-700">
+                    Especie
                   </label>
                   <input
                     type="text"
-                    name="profesion"
-                    id="profesion"
-                    value={formData.profesion}
+                    name="mascota.especie"
+                    id="mascota.especie"
+                    value={formData.mascota.especie}
                     onChange={handleChange}
                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
-                    placeholder="Ej: Perro mestizo, gato siamés..."
+                    placeholder="Ej: Perro, gato, conejo..."
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="mascota.raza" className="block text-sm font-medium text-gray-700">
+                    Raza
+                  </label>
+                  <input
+                    type="text"
+                    name="mascota.raza"
+                    id="mascota.raza"
+                    value={formData.mascota.raza}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Ej: Mestizo, siamés..."
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="mascota.sexo" className="block text-sm font-medium text-gray-700">
+                    Sexo
+                  </label>
+                  <select
+                    name="mascota.sexo"
+                    id="mascota.sexo"
+                    value={formData.mascota.sexo}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                  >
+                    <option value="">Sin especificar</option>
+                    <option value="macho">Macho</option>
+                    <option value="hembra">Hembra</option>
+                    <option value="desconocido">Desconocido</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="mascota.personalidad" className="block text-sm font-medium text-gray-700">
+                    Personalidad
+                  </label>
+                  <input
+                    type="text"
+                    name="mascota.personalidad"
+                    id="mascota.personalidad"
+                    value={formData.mascota.personalidad}
+                    onChange={handleChange}
+                    maxLength={300}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Ej: Juguetón, cariñoso y curioso"
                   />
                 </div>
 
@@ -531,59 +575,71 @@ const MemorialForm = () => {
             </div>
           </div>
 
-          {/* Familia */}
+          {/* Recuerdos favoritos */}
           <div className="pet-admin-card">
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
-                Familia de la mascota
+                Sus cosas favoritas
               </h3>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="familia.conyuge" className="block text-sm font-medium text-gray-700">
-                    Compañero o compañera
+                  <label htmlFor="mascota.favoritos.actividad" className="block text-sm font-medium text-gray-700">
+                    Actividad favorita
                   </label>
                   <input
                     type="text"
-                    name="familia.conyuge"
-                    id="familia.conyuge"
-                    value={formData.familia.conyuge}
+                    name="mascota.favoritos.actividad"
+                    id="mascota.favoritos.actividad"
+                    value={formData.mascota.favoritos.actividad}
                     onChange={handleChange}
                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
-                    placeholder="Nombre de otra mascota cercana (opcional)"
+                    placeholder="Ej: Pasear por el parque"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Crías
+                  <label htmlFor="mascota.favoritos.juguete" className="block text-sm font-medium text-gray-700">
+                    Juguete favorito
                   </label>
-                  {formData.familia.hijos.map((hijo, index) => (
-                    <div key={index} className="flex items-center space-x-2 mb-2">
-                      <input
-                        type="text"
-                        value={hijo}
-                        onChange={(e) => handleArrayChange('hijos', index, e.target.value)}
-                        className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
-                        placeholder="Nombre de la cría"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleArrayChange('hijos', index, '')}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                      </button>
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => addArrayField('hijos')}
-                    className="text-sm text-pet-700 hover:text-pet-900"
-                  >
-                    + Agregar cría
-                  </button>
+                  <input
+                    type="text"
+                    name="mascota.favoritos.juguete"
+                    id="mascota.favoritos.juguete"
+                    value={formData.mascota.favoritos.juguete}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Ej: Su pelota amarilla"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="mascota.favoritos.comida" className="block text-sm font-medium text-gray-700">
+                    Comida favorita
+                  </label>
+                  <input
+                    type="text"
+                    name="mascota.favoritos.comida"
+                    id="mascota.favoritos.comida"
+                    value={formData.mascota.favoritos.comida}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Ej: Galletas de pollo"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="mascota.favoritos.lugar" className="block text-sm font-medium text-gray-700">
+                    Lugar favorito
+                  </label>
+                  <input
+                    type="text"
+                    name="mascota.favoritos.lugar"
+                    id="mascota.favoritos.lugar"
+                    value={formData.mascota.favoritos.lugar}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pet-500 focus:border-pet-500 sm:text-sm"
+                    placeholder="Ej: Junto a la ventana"
+                  />
                 </div>
               </div>
             </div>
