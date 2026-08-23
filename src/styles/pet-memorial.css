@@ -17,6 +17,7 @@
 
 .pet-memorial-shell {
   position: relative;
+  isolation: isolate;
   width: min(100%, 540px);
   min-height: 720px;
   margin: 0 auto;
@@ -24,11 +25,27 @@
   border: 1px solid rgba(118, 84, 70, 0.12);
   border-radius: 32px;
   background-color: #fff6df;
+  box-shadow: 0 24px 70px rgba(88, 54, 41, 0.18);
+}
+
+/* La ilustración de fondo es un marco de 647x940. Como capa de background se
+   escalaba al ancho del shell y terminaba antes que el contenido, dejando un
+   corte horizontal duro y un área plana debajo. Va en un pseudo-elemento con
+   aspect-ratio para que su alto salga exacto del ancho a cualquier breakpoint,
+   y se difumina en el borde inferior para fundirse con el color del shell. */
+.pet-memorial-shell::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  aspect-ratio: 647 / 940;
   background-image: url('/img/pets/memorial-pastel-bg.png');
   background-position: center top;
   background-repeat: no-repeat;
-  background-size: 100% auto;
-  box-shadow: 0 24px 70px rgba(88, 54, 41, 0.18);
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(180deg, #000 94%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 94%, transparent 100%);
+  pointer-events: none;
+  content: '';
 }
 
 .pet-memorial-hero {
@@ -426,6 +443,14 @@
   .pet-memorial-shell {
     width: min(100%, 1180px);
     min-height: 760px;
+  }
+
+  /* En desktop la ilustración es una banda de 560px pegada a la izquierda, con
+     un degradado horizontal que la funde hacia la derecha. El alto se deriva
+     del mismo 560px y de la proporción del arte, así queda exacto. */
+  .pet-memorial-shell::before {
+    aspect-ratio: auto;
+    height: calc(560px * 940 / 647);
     background-image:
       linear-gradient(90deg, rgba(255, 246, 223, 0.12) 0 40%, rgba(255, 250, 239, 0.9) 65%, #fffaf0 100%),
       url('/img/pets/memorial-pastel-bg.png');
