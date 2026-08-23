@@ -33,6 +33,8 @@ npm run dev
 
 Vite inicia normalmente en `http://localhost:5173`.
 
+Conviene respetar ese puerto. Si se apunta el desarrollo local contra la API de producción, el CORS del backend solo admite `localhost:5173` y `localhost:5174`: desde cualquier otro puerto las peticiones se bloquean y el memorial aparece como no encontrado.
+
 La única variable usada por el código del frontend es:
 
 | Variable | Propósito |
@@ -110,11 +112,23 @@ npm run build
 npm audit
 ```
 
-El build debe ejecutarse con `VITE_API_URL` configurada para el entorno que se va a desplegar. El proyecto conserva deuda de lint anterior; cualquier cambio nuevo debe evitar aumentar el número de incidencias.
+El build debe ejecutarse con `VITE_API_URL` configurada para el entorno que se va a desplegar.
+
+El proyecto conserva deuda de lint anterior: **40 incidencias (15 errores y 25 avisos)**, concentradas en el panel administrativo y sin efecto visible en tiempo de ejecución. Son en su mayoría `no-unused-vars`, `no-useless-catch` y `react-hooks/exhaustive-deps`. Cualquier cambio nuevo debe dejar ese número igual o menor.
 
 ## Despliegue
 
-El proyecto de Vercel es `lazos-pet-front`. La variable `VITE_API_URL` debe existir en Production y Preview. El dominio de producción es `sistema.pets.lazosdevida.com`.
+El proyecto de Vercel es `lazos-pet-front`, en el team `petslazosdevidacom`. La variable `VITE_API_URL` debe existir en Production y Preview.
+
+**Se despliega con `git push`.** El proyecto está conectado a GitHub: cada push a `main` dispara un build de producción automáticamente (unos 20 segundos).
+
+```bash
+git push origin main    # esto es todo
+```
+
+No usar `vercel --prod`. El team está en plan Hobby y los deploys lanzados desde el CLI quedan en estado `Blocked` cuando llegan mientras el build de Git ya está corriendo; además son redundantes. En el panel se distinguen por la columna de origen: los buenos muestran la rama y el commit, los del CLI muestran `vercel deploy`.
+
+Vercel avisa que el autor del commit «is not a member of this team». Es solo atribución: el deploy se ejecuta con la cuenta dueña de la conexión de Git (`lazopet7-png`) y no se bloquea.
 
 Antes de desplegar:
 
@@ -123,6 +137,12 @@ Antes de desplegar:
 3. Probar clientes, memoriales, QR y gestión de media.
 4. Verificar el memorial público en móvil.
 5. Confirmar que CORS del backend admite el dominio del frontend.
+
+### Dominio para probar
+
+Probar siempre en `https://sistema.pets.lazosdevida.com`.
+
+El alias `lazos-pet-front.vercel.app` apunta al mismo despliegue pero **no está en la lista de orígenes permitidos del backend**, así que ahí el memorial falla por CORS y aparece el estado de error. No es un fallo del despliegue.
 
 ## Seguridad
 
