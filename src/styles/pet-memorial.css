@@ -419,20 +419,63 @@
 .pet-social-links a { color: #a36678; transition: transform 160ms ease, color 160ms ease; }
 .pet-social-links a:hover { color: var(--pet-pink-dark); transform: translateY(-2px); }
 
-.pet-memorial-page > footer {
+/* Cierra la página con la misma marca del topbar, sin fondo propio: se apoya
+   en el fondo de la página en vez de meter una losa blanca bajo la tarjeta. */
+.pet-memorial-footer {
   width: min(100%, 540px);
   margin: 0 auto;
-  overflow: hidden;
-  border-radius: 24px 24px 0 0;
+  padding: 22px 20px 28px;
+  color: var(--pet-ink);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-.pet-memorial-page > footer img {
-  width: 160px !important;
-  height: 76px !important;
+.pet-memorial-footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.pet-memorial-page > footer > div > div:first-child {
-  gap: 8px;
+.pet-memorial-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pet-memorial-footer-links a {
+  color: rgba(118, 84, 70, 0.72);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.pet-memorial-footer-links a:hover {
+  color: var(--pet-pink-dark);
+}
+
+.pet-memorial-footer-legal {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(118, 84, 70, 0.12);
+}
+
+.pet-memorial-footer-legal p {
+  margin: 0;
+  color: rgba(118, 84, 70, 0.6);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.pet-memorial-footer-legal a {
+  color: var(--pet-pink-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pet-memorial-footer-legal a:hover {
+  text-decoration: underline;
 }
 
 @media (min-width: 900px) {
@@ -619,8 +662,12 @@
   }
 
   .pet-socials,
-  .pet-memorial-page > footer {
+  .pet-memorial-footer {
     width: min(100%, 1180px);
+  }
+
+  .pet-memorial-footer {
+    padding: 26px 32px 34px;
   }
 
   .pet-socials h3 {
@@ -635,7 +682,7 @@
   .pet-memorial-hero-content { padding-top: 27px; }
   .pet-memorial-content { margin-inline: 12px; }
   .pet-memorial-tabs { margin-inline: 12px; }
-  .pet-memorial-page > footer { border-radius: 0; }
+  .pet-memorial-footer { padding-inline: 16px; }
 }
 
 @media (max-width: 365px) {

@@ -1,32 +1,43 @@
 import React from 'react';
 
+/**
+ * Footer del memorial público.
+ *
+ * Antes era una losa blanca heredada de la versión de personas, con el logo
+ * grabado de Lazos de Vida (una imagen cuadrada de 500x500 con el logo al
+ * centro y márgenes enormes) forzado a 160x76 px: las letras quedaban de unos
+ * 15 px y no se leía nada. Ahora la página cierra con la misma marca con la
+ * que abre en el topbar, sobre el fondo de la propia página.
+ */
 const Footer = () => {
   return (
-    <footer className="bg-white text-black py-2 mt-0">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center mb-2 md:mb-0">
-            <img
-            src="/img/logos/derecho.png"
-            alt="Icono derecho"
-            className="h-40 md:h-80 object-contain font-lora"
-          />
-          </div>
-          <div className="flex flex-wrap justify-center gap-6">
-            <a href="#" className="text-gray-400 hover:text-black transition duration-300">Términos</a>
-            <a href="#" className="text-gray-400 hover:text-black transition duration-300">Privacidad</a>
-            <a href="#" className="text-gray-400 hover:text-black transition duration-300">Contacto</a>
-          </div>
+    <footer className="pet-memorial-footer">
+      <div className="pet-memorial-footer-top">
+        <div className="pet-memorial-brand">
+          <span className="pet-brand-mark" aria-hidden="true">🐾</span>
+          <span>
+            Lazos de Vida
+            <small>Memorial Pets</small>
+          </span>
         </div>
-        {/* Copyright - Centrado en móvil, justificado en escritorio */}
-        <div className="text-center md:text-left mb-2 md:mb-0">
-          <p className="text-xs md:text-sm text-gray-800">
-            &copy; {new Date().getFullYear()} Lazos de Vida Pets. Todos los derechos reservados.
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            Diseñado por <a href="https://bitsdeve.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-colors">bitsdeve 🤖</a>
-          </p>
-        </div>
+
+        <nav className="pet-memorial-footer-links" aria-label="Enlaces legales">
+          <a href="#">Términos</a>
+          <a href="#">Privacidad</a>
+          <a href="#">Contacto</a>
+        </nav>
+      </div>
+
+      <div className="pet-memorial-footer-legal">
+        <p>
+          &copy; {new Date().getFullYear()} Lazos de Vida Pets. Todos los derechos reservados.
+        </p>
+        <p>
+          Diseñado por{' '}
+          <a href="https://bitsdeve.com" target="_blank" rel="noopener noreferrer">
+            bitsdeve
+          </a>
+        </p>
       </div>
     </footer>
   );
