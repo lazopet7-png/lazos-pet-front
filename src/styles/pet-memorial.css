@@ -445,17 +445,20 @@
     min-height: 760px;
   }
 
-  /* En desktop la ilustración es una banda de 560px pegada a la izquierda, con
-     un degradado horizontal que la funde hacia la derecha. El alto se deriva
-     del mismo 560px y de la proporción del arte, así queda exacto. */
+  /* En desktop la ilustración es una banda de 560px pegada a la izquierda que
+     se funde hacia la derecha. El degradado va dimensionado a la banda, no al
+     shell: antes usaba porcentajes del shell mientras la banda medía 560px
+     fijos, así que el punto de fundido se desalineaba según el ancho de la
+     ventana y dejaba un borde vertical duro (a 1440px la banda terminaba al
+     47% del shell, donde el degradado apenas iba por un tercio). */
   .pet-memorial-shell::before {
-    aspect-ratio: auto;
-    height: calc(560px * 940 / 647);
+    right: auto;
+    width: 560px;
     background-image:
-      linear-gradient(90deg, rgba(255, 246, 223, 0.12) 0 40%, rgba(255, 250, 239, 0.9) 65%, #fffaf0 100%),
+      linear-gradient(90deg, rgba(255, 246, 223, 0) 0 52%, rgba(255, 246, 223, 0.72) 78%, #fff6df 100%),
       url('/img/pets/memorial-pastel-bg.png');
-    background-position: center, left top;
-    background-size: 100% 100%, 560px auto;
+    background-position: left top, left top;
+    background-size: 100% 100%, 100% 100%;
   }
 
   .pet-memorial-topbar {
@@ -652,4 +655,100 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+
+  .pet-memorial-status-paws > * {
+    animation: none !important;
+    opacity: 1;
+  }
+}
+
+/* Pantallas de carga y error. Antes eran el gris genérico heredado de la
+   versión de personas; el visitante llega por QR y esto es lo primero que ve,
+   así que usa la misma paleta y tipografía del memorial. */
+.pet-memorial-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  color: var(--pet-status-ink, #765446);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-align: center;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 206, 53, 0.22), transparent 24%),
+    radial-gradient(circle at 88% 68%, rgba(141, 120, 189, 0.16), transparent 30%),
+    #f7f0eb;
+}
+
+.pet-memorial-status-card {
+  max-width: 380px;
+}
+
+.pet-memorial-status-paws {
+  display: inline-flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: #ef7894;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.pet-memorial-status-paws > * {
+  animation: pet-paw-step 1.2s ease-in-out infinite;
+}
+
+.pet-memorial-status-paws > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pet-memorial-status-paws > *:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pet-paw-step {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0) rotate(-8deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-7px) rotate(-8deg);
+  }
+}
+
+.pet-memorial-status-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.pet-memorial-status-hint {
+  margin: 8px 0 0;
+  color: rgba(118, 84, 70, 0.65);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pet-memorial-status-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: #ef7894;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pet-memorial-status-action:hover {
+  background: #d95779;
+  transform: translateY(-1px);
 }
